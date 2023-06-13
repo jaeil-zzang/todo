@@ -1,0 +1,52 @@
+.todoList {
+  border-collapse: collapse;
+  border: 1px solid black;
+  width: 70vw;
+
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+
+  th,
+  td {
+    border: 1px solid black;
+    text-align: center;
+
+    p {
+      display: inline-block;
+
+      vertical-align: middle;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      max-width: 70vw;
+    }
+  }
+
+  thead {
+    background-color: #333;
+    color: white;
+  }
+
+  th.title {
+    width: 50%;
+  }
+
+  th.content {
+    width: 30%;
+  }
+
+  th.date {
+    width: 20%;
+  }
+}
+
+.completed {
+  background-color: #e7e7e7;
+}
+
+.default {
+  background-color: white;
+}

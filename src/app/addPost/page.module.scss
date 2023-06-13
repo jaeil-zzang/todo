@@ -1,0 +1,17 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.imgBox {
+  margin-top: 1rem;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2/ 1;
+}
