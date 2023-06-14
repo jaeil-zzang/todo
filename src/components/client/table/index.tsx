@@ -1,17 +1,31 @@
 "use client";
 
+import useSWRMutation from "swr/mutation";
+
 import Link from "next/link";
 import styles from "./table.module.scss";
 import { instance } from "@/lib/axios";
 import Button from "@/components/elements/button";
 import { IAddPost } from "@/app/addPost/page";
 import Input from "@/components/elements/Input";
+import { useRouter } from "next/navigation";
 
 interface Props<T> {
   data: T[];
 }
 
+const fetcher = async (
+  url: string,
+  { arg: { id } }: { arg: { id: string } }
+) => {
+  return await instance.delete(url + "/" + id);
+};
+
 const Table = <T extends IAddPost>({ data }: Props<T>) => {
+  const { trigger } = useSWRMutation("/post", fetcher);
+
+  const router = useRouter();
+
   return (
     <table className={styles.todoList}>
       <thead>
@@ -64,10 +78,13 @@ const Table = <T extends IAddPost>({ data }: Props<T>) => {
                   label="삭제"
                   onClick={async () => {
                     try {
-                      const res = await instance.delete(`/post/${id}`);
+                      const res = await trigger({ id: id || "" });
 
-                      if (res.status === 200) {
+                      if (res?.status === 200) {
                         alert("삭제 성공");
+                        router.refresh();
+                      } else {
+                        throw Error("delete error");
                       }
                     } catch (error) {
                       if (error instanceof Error) {

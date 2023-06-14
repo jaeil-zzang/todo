@@ -1,16 +1,18 @@
 import Link from "next/link";
 import styles from "./page.module.scss";
 import Button from "@/components/elements/button";
-import { instance } from "@/lib/axios";
-import Image from "next/image";
+
 import { IAddPost } from "./addPost/page";
 
 import Table from "@/components/client/table";
+import { Suspense } from "react";
 
-export const getData = async (): Promise<IAddPost[]> => {
-  const res = await instance.get("/post");
+const getData = async (): Promise<IAddPost[]> => {
+  const res = await fetch("http://localhost:4000/post", {
+    cache: "no-store",
+  });
 
-  return res.data;
+  return res.json();
 };
 
 export default async function Home() {
@@ -23,7 +25,9 @@ export default async function Home() {
           <Button label="Todo 작성"></Button>
         </Link>
 
-        <Table data={data} />
+        <Suspense fallback={<div>...loading</div>}>
+          <Table data={data} />
+        </Suspense>
       </section>
     </main>
   );
